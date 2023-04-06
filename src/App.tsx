@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from './components/layout';
+import { AddTask } from './modules/AddTask';
+import { Task } from './types';
+import { TaskContext } from './TaskContext';
+import { ListOfTasks } from './modules/ListOfTasks';
 
 function App() {
+  const [listOfTasks, setListOfTasks] = React.useState<Task[]>([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <TaskContext.Provider value={{ listOfTasks, setListOfTasks }}>
+      <div className="App">
+        <Layout>
+          <h2 className="text-5xl">Layout</h2>
+          <AddTask />
+          <ListOfTasks />
+        </Layout>
+      </div>
+    </TaskContext.Provider>
   );
 }
 
