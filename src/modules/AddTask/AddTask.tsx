@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Task } from '../../types';
 import useTask from '../../hooks/useTask';
 import generateUUID from '../../ultils/generateUUID';
-import { TaskContext } from '../../TaskContext';
 
 export default function AddTask() {
   const [task, setTask] = React.useState<Task>({
@@ -13,8 +12,6 @@ export default function AddTask() {
 
   const [addTask] = useTask();
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { listOfTasks } = useContext(TaskContext);
   function handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
     setTask({ ...task, name: event.target.value, id: generateUUID() });
   }
@@ -23,26 +20,26 @@ export default function AddTask() {
     if (task.name === '') return;
     // TODO handle error if empty
     addTask(task);
+    setTask({ name: '', id: ``, completed: false });
   }
-
-  console.log(listOfTasks);
 
   return (
     <div>
       <h1>Add Task</h1>
-      <form onSubmit={handleAddTask}>
-        <div>
-          <label htmlFor="taskName" className="mr-1">
-            Task Name
-          </label>
-          <input
-            type="text"
-            placeholder="Task Name"
-            onChange={handleOnChange}
-            className="border border-black py-1 px-2"
-          />
-          <button type="submit">Add Task</button>
-        </div>
+      <form onSubmit={handleAddTask} className="w-fit">
+        <input
+          type="text"
+          placeholder="Task Name"
+          onChange={handleOnChange}
+          value={task.name}
+          className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none w-48"
+        />
+        <button
+          type="submit"
+          className="rounded-full bg-green-400 py-2 px-4 ml-2"
+        >
+          +
+        </button>
       </form>
     </div>
   );

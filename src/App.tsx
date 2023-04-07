@@ -4,6 +4,7 @@ import { AddTask } from './modules/AddTask';
 import { Task } from './types';
 import { TaskContext } from './TaskContext';
 import { ListOfTasks } from './modules/ListOfTasks';
+import { Modal } from './components/modal';
 
 function App() {
   const [listOfTasks, setListOfTasks] = React.useState<Task[]>([]);
@@ -13,9 +14,11 @@ function App() {
     <TaskContext.Provider value={{ listOfTasks, setListOfTasks }}>
       <div className="App">
         <Layout>
-          <h2 className="text-5xl">Layout</h2>
           <AddTask />
           <ListOfTasks />
+          <Modal isOpen={false}>
+            <AddTask />
+          </Modal>
         </Layout>
       </div>
     </TaskContext.Provider>
